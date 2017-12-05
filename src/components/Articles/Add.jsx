@@ -9,7 +9,7 @@ const fields = [
 ];
 
 // the add article component
-const Add = ( {onSubmit}) => (
+const Add = ({onSubmit}) => (
     <div>
         <h2>Add Article</h2>
 

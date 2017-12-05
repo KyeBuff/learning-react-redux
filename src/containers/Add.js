@@ -3,7 +3,7 @@ import Add from '../components/Articles/Add';
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onSubmit: () => dispatch({ type: "add" }),
+		onSubmit: () => dispatch({ type: "addArticle" }),
 	};
 };
 
