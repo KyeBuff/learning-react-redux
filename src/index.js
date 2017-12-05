@@ -9,7 +9,7 @@ import App from "./App";
 
 import { Provider } from 'react-redux';
 
-import { initial, store } from "./data/state";
+import { store } from "./data/state";
 
 // wrap the app in Router
 // pass our articles through to App using props

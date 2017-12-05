@@ -21,6 +21,7 @@ class Form extends Component {
 		}
 
 		this.submit = this.submit.bind(this);
+		this.change = this.change.bind(this);
 	}
 
 	change(e, i) {
@@ -31,18 +32,24 @@ class Form extends Component {
 
 	submit(e) {
 		e.preventDefault();
-		this.props.onSubmit();
+
+		let data = this.state.fields.reduce((data, field) => {
+			data[field.name] = field.value;
+			return data;
+		}, {});
+
+		this.props.onSubmit(data);
 	}
 
   render() {
 
-  	const { fields, className, button } = this.props;
+  	const { className, button } = this.props;
 
   	return (
   		<form onSubmit={(e) => this.submit(e)} className={ "form" + (className ? " " + className : "") } >
-	      { fields.map(({ name, label, value }, i) => (
+	      { this.state.fields.map(({ name, label, value }, i) => (
 	          <Input 
-	          	onChange={(e) => this.onChange(e, i)}
+	          	onChange={(e) => this.change(e, i)}
 	          	key={ i } 
 	          	name={ name } 
 	          	label={ label }
