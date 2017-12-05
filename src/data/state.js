@@ -1,10 +1,8 @@
-
 import { Map, List } from "immutable";
 
 import { createStore } from "redux";
 
 import reducer from "./reducer";
-
 
 export const initial = Map({
 

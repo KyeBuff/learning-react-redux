@@ -8,9 +8,10 @@ import {
 import Header from "./components/Header";
 import FourOhFour from "./components/FourOhFour";
 
-import Articles from "./components/Articles/Articles";
-import Article from "./components/Articles/Article";
+import Article from "./containers/Article";
 import Add from "./components/Articles/Add";
+
+import Articles from "./containers/Articles";
 
 const App = ({ articles }) => (
     <div>
@@ -20,14 +21,14 @@ const App = ({ articles }) => (
         { /* route switch, to handle 404s */ }
         <Switch>
             { /* the articles list */ }
-            <Route exact path="/" render={ () => <Articles articles={ articles } /> } />
+            <Route exact path="/" component={ Articles } />
 
             { /* show the add form - has to come before :id so "add" doesn't get treated as an id  */ }
             <Route exact path="/articles/add" component={ Add } />
 
             { /* show an individual article */ }
             <Route exact path="/articles/:id" render={ ({ match }) => (
-                <Article article={ articles.find(a => a.get("id") === +match.params.id) } />
+                <Article id={ match.params.id } />
             )} />
 
             { /* 404 page */}
@@ -38,3 +39,8 @@ const App = ({ articles }) => (
 );
 
 export default App;
+
+
+
+
+

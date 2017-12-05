@@ -7,17 +7,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 // import the App component
 import App from "./App";
 
-
+import { Provider } from 'react-redux';
 
 import { initial, store } from "./data/state";
-
-let articles = store.getState().get("articles");
 
 // wrap the app in Router
 // pass our articles through to App using props
 ReactDOM.render(
-    <Router>
-        <App articles={ articles } />
-    </Router>,
+    <Provider store={store}>
+        <Router>
+            <App />
+        </Router>
+    </Provider>,
     document.getElementById("root"),
 );
