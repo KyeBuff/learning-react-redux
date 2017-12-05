@@ -9,11 +9,11 @@ const fields = [
 ];
 
 // the add article component
-const Add = () => (
+const Add = ( {onSubmit}) => (
     <div>
         <h2>Add Article</h2>
 
-        <Form className="panel-body" fields={ fields } button="Add Article" />
+        <Form onSubmit={ onSubmit } className="panel-body" fields={ fields } button="Add Article" />
     </div>
 );
 

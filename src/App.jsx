@@ -9,11 +9,11 @@ import Header from "./components/Header";
 import FourOhFour from "./components/FourOhFour";
 
 import Article from "./containers/Article";
-import Add from "./components/Articles/Add";
+import Add from "./containers/Add";
 
 import Articles from "./containers/Articles";
 
-const App = ({ articles }) => (
+const App = () => (
     <div>
         { /* header should show on all pages */ }
         <Header subtitle="Very insightful">My Blog</Header>
