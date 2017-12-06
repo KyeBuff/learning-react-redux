@@ -10,6 +10,7 @@ import FourOhFour from "./components/FourOhFour";
 
 import Article from "./containers/Article";
 import Add from "./containers/Add";
+import Edit from "./containers/Edit";
 
 import Articles from "./containers/Articles";
 
@@ -29,6 +30,14 @@ const App = () => (
             { /* show an individual article */ }
             <Route exact path="/articles/:id" render={ ({ match }) => (
                 <Article id={ match.params.id } />
+            )} />
+
+            <Route exact path="/articles/:tag" render={ ({ match }) => (
+                <Article tag={ match.params.tag } />
+            )} />
+
+            <Route exact path="/articles/:id/edit" render={ ({ match }) => (
+                <Edit id={ match.params.id } />
             )} />
 
             { /* 404 page */}

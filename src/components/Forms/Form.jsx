@@ -11,13 +11,7 @@ class Form extends Component {
 		super(props);
 
 		this.state = {
-			fields: this.props.fields.map(({ name, label }) => {
-				return {
-					name: name,
-					label: label,
-					value: "",
-				}
-			}),
+			fields: this.props.fields.slice(),
 		}
 
 		this.submit = this.submit.bind(this);
@@ -38,7 +32,15 @@ class Form extends Component {
 			return data;
 		}, {});
 
-		this.props.onSubmit(data);
+
+		// Change to every?
+		let validFields = this.state.fields.reduce((valid, fields) => {
+			return fields.value ? true : false;
+		}, false);
+
+		if(validFields) {
+			this.props.onSubmit(data);
+		}
 	}
 
   render() {
