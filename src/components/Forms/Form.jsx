@@ -32,11 +32,9 @@ class Form extends Component {
 			return data;
 		}, {});
 
-
-		// Change to every?
-		let validFields = this.state.fields.reduce((valid, fields) => {
-			return fields.value ? true : false;
-		}, false);
+		let validFields = this.state.fields.every(field => {
+			return field.value;
+		});
 
 		if(validFields) {
 			this.props.onSubmit(data);

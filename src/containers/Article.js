@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { fetchArticle } from '../data/actions/api';
 
 import Article from "../components/Articles/Article";
 
@@ -12,9 +13,15 @@ const mapStateToProps = (state, { id } ) => {
 	}
 }
 
-export default connect(mapStateToProps)(Article);
+const mapDispatchToProps = (dispatch, { id } ) => {
+	return {
+		onLoad: () => dispatch(fetchArticle(id)),
+	}
+}
 
+export default connect(mapStateToProps, mapDispatchToProps)(Article);
 
+// Map api action to props
 
 
 

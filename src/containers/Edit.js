@@ -3,7 +3,7 @@
 
 import { connect } from 'react-redux';
 import Edit from "../components/Articles/Edit";
-import { updateArticle } from "../data/actions";
+import { updateArticle } from "../data/actions/state";
 
 const mapStateToProps = (state, { id } ) => {
 

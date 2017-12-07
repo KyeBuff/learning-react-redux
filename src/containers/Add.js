@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 import Add from '../components/Articles/Add';
-import { addArticle } from "../data/actions";
+import { postArticle } from "../data/actions/api";
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onSubmit: data => dispatch(addArticle(data)),
+		onSubmit: data => dispatch(postArticle(data)),
 	};
 };
 

@@ -1,20 +1,14 @@
 import { Map, List } from "immutable";
 
-let lastID = 2;
-
-const addArticle = (state, { title, article, tags }) => {
-	
-	lastID += 1;
-
-	tags = List(tags.split(', '));
+const addArticle = (state, { id, title, article, tags }) => {
 
 	return state.update('articles', articles => {
 		return articles.push(Map({
-			id: lastID,
+			id: id,
 			title: title,
 			article: article,
 			comments: List(),
-			tags: tags,
+			tags: List(tags),
 
 		}));
 	}) 
@@ -56,14 +50,39 @@ const addComment = (state, { id, email, comment }) => {
 
 }
 
+const setArticles = (state, { articles }) => {
+	return state.set("articles", articles);
+};
+
+const setArticle = (state, {article}) => {
+	//search articles 
+		//if article exists
+	if(state.get('articles').find(a => a.get('id') === article.get('id'))) {
+		//update the missing properties title
+		return state.update('articles', articles => articles.map(a => {
+			return a.get('id') === article.get('id') ? a.set('article', article.get('article')) : a ;
+		}));
+	} else {
+		//push the article
+		return state.update('articles', articles => articles.push(article));
+	}
+};
+
+const setComments = (state, {comments, id}) => {
+	return state.update('articles', articles => articles.map(a => {
+			return a.get('id') === id ? a.set('comments', comments) : a ;
+	}));
+};
+
 const deleteArticle = (state, { id }) => {	
-
 	return state.update('articles', articles => articles.filter(a => a.get('id') !== id));
-
 }
 
 const reducer = (state, action) => {
 	switch (action.type) {
+		case 'setArticles': return setArticles(state, action);
+		case 'setComments': return setComments(state, action);
+		case 'setArticle': return setArticle(state, action);
 		case 'addArticle': return addArticle(state, action);
 		case 'updateArticle': return updateArticle(state, action);
 		case 'addComment': return addComment(state, action);
@@ -73,3 +92,4 @@ const reducer = (state, action) => {
 }
 
 export default reducer;
+
