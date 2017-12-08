@@ -40,6 +40,10 @@ const App = () => (
                 <Edit id={ match.params.id } />
             )} />
 
+            <Route exact path="/tags/:tagID/articles" render={ ({ match }) => (
+                <Articles tagID={ match.params.tagID } />
+            )} />
+
             { /* 404 page */}
             <Route component={ FourOhFour } />
         </Switch>

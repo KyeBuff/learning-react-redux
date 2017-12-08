@@ -12,11 +12,14 @@ import {
 
 import { fromJS } from 'immutable';
 
-export const fetchArticles = () => dispatch => {
-	axios.get("/articles").then(response => {
+export const fetchArticles = (tagID) => dispatch => {
+	
+	const url = tagID ? "tags/"+tagID+"/articles" : "/articles";
+
+	axios.get(url).then(response => {
 		const articles = fromJS(response.data);
 		dispatch(setArticles(articles));
-	}); 
+	}); 	
 };
 
 export const fetchArticle = id => dispatch => {

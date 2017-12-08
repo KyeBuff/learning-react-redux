@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 class Articles extends Component {
 
     componentDidMount() {
-        this.props.onLoad();
+        this.props.onLoad(this.props.tagID);
     }
 
     render() {
