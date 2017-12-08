@@ -56,3 +56,9 @@ export const setComments = (comments, id) => {
 	};
 };
 
+export const setUpdatedArticle = article => {
+	return {
+		type: "setUpdatedArticle",
+		article,
+	};
+};

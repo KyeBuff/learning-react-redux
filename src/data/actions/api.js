@@ -1,9 +1,13 @@
 import axios from '../../axios';
-import { setArticles } from './state';
-import { setArticle } from './state';
-import { setComments } from './state';
-import { deleteArticle } from './state';
-import { addArticle } from './state';
+import { 
+	setArticles,
+	setArticle,
+	setComments,
+	deleteArticle,
+	addArticle,
+	updateArticle,
+	setUpdatedArticle,
+} from './state';
 
 import { fromJS } from 'immutable';
 
@@ -45,3 +49,29 @@ export const postArticle = ({ title, article, tags }) => dispatch => {
 	});
 };
 
+// Can only edit once?
+export const putArticle = ({ id, title, article, tags }) => dispatch => {
+	const updatedArticle = {
+		title: title,
+		article: article,
+		tags: tags.trim().split(' '),
+	};
+	axios.put("/articles/"+id, updatedArticle).then(response => {
+		// Unable to uses fromJS?
+		dispatch(updateArticle(fromJS(response.data)));
+	});
+};
+
+export const fetchUpdatedArticle = id => dispatch => {
+	axios.get("/articles/"+id).then(response => {
+		const article = fromJS(response.data);
+		dispatch(setUpdatedArticle(article));
+	}); 
+};
+
+export const setComments = (comments, id) => {
+	axios.get("/articles/"+id).then(response => {
+		const article = fromJS(response.data);
+		dispatch(setUpdatedArticle(article));
+	}); 
+};
