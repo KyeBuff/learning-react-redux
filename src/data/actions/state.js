@@ -18,15 +18,6 @@ export const updateArticle = ({ id, title, article, tags}) => {
 	};
 };
 
-export const addComment = ({ id, email, comment }) => {
-	return {
-		type: "addComment",
-		email: email,
-		comment: comment,
-		id: id,
-	};
-};
-
 export const deleteArticle = (id) => {
 	return {
 		type: "deleteArticle",
@@ -45,6 +36,14 @@ export const setArticle = article => {
 	return {
 		type: "setArticle",
 		article,
+	};
+};
+
+export const addComment = (comment, id) => {
+	return {
+		type: "addComment",
+		comment,
+		id,
 	};
 };
 

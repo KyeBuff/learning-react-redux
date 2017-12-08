@@ -32,10 +32,9 @@ const updateArticle = (state, { id, title, article, tags }) => {
 
 const addComment = (state, { id, email, comment }) => {	
 
-	const newComment = Map({
-		email: email,
-		comment: comment,
-	});
+	const newComment = Map(comment);
+
+	console.log(newComment.toJS());
 	
 	return state.update('articles', articles => {
 

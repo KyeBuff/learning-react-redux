@@ -7,6 +7,7 @@ import {
 	addArticle,
 	updateArticle,
 	setUpdatedArticle,
+	addComment,
 } from './state';
 
 import { fromJS } from 'immutable';
@@ -22,13 +23,6 @@ export const fetchArticle = id => dispatch => {
 	axios.get("/articles/"+id).then(response => {
 		const article = fromJS(response.data);
 		dispatch(setArticle(article));
-	}); 
-};
-
-export const fetchComments = id => dispatch => {
-	axios.get("/articles/"+id+"/comments").then(response => {
-		const comments = fromJS(response.data);
-		dispatch(setComments(comments, id));
 	}); 
 };
 
@@ -69,9 +63,19 @@ export const fetchUpdatedArticle = id => dispatch => {
 	}); 
 };
 
-export const setComments = (comments, id) => {
-	axios.get("/articles/"+id).then(response => {
-		const article = fromJS(response.data);
-		dispatch(setUpdatedArticle(article));
+export const fetchComments = (id) => dispatch => {
+	axios.get("/articles/"+id+"/comments").then(response => {
+		const comments = fromJS(response.data);
+		dispatch(setComments(comments, id));
 	}); 
+};
+
+export const postComment = ({ email, comment }, id) => dispatch => {
+	const newComment = {
+		email,
+		comment,
+	};
+	axios.post("/articles/"+id+"/comments", newComment).then(response => {
+		dispatch(addComment(fromJS(response.data), id));
+	});
 };
