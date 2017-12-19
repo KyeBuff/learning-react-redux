@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 import Actions from '../components/Articles/Actions';
-import { deleteArticleAPI } from "../data/actions/api";
+import { deleteArticle } from "../data/actions/api";
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onDelete: data => dispatch(deleteArticleAPI(data)),
+		onDelete: data => dispatch(deleteArticle(data)),
 	};
 };
 

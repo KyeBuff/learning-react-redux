@@ -17,7 +17,6 @@ const mapStateToProps = (state, { id } ) => {
 	if(state.get('articles').count()) {
 		articles = state.get('articles');
 		article = articles.find(a => a.get('id') === +id);
-		console.log(article.toJS());
 		tags = article.get('tags').map(tag => tag.get('name')).join(' ');
 		fields = [
     	{ name: "title", label: "Title", value: article.get('title') },

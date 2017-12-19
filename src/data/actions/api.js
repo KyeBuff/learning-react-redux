@@ -3,35 +3,55 @@ import {
 	setArticles,
 	setArticle,
 	setComments,
-	deleteArticle,
+	removeArticle,
 	addArticle,
 	updateArticle,
 	setUpdatedArticle,
+	setArticlesByTag,
 	addComment,
 } from './state';
 
 import { fromJS } from 'immutable';
 
-export const fetchArticles = (tagID) => dispatch => {
+export const fetchArticles = (tagID) => (dispatch, getState) => {
 	
-	const url = tagID ? "tags/"+tagID+"/articles" : "/articles";
-
-	axios.get(url).then(response => {
+	axios.get("/articles").then(response => {
 		const articles = fromJS(response.data);
 		dispatch(setArticles(articles));
-	}); 	
+		if(tagID) {
+			dispatch(setArticlesByTag(tagID));
+		}
+	});	
+	 	
 };
 
-export const fetchArticle = id => dispatch => {
-	axios.get("/articles/"+id).then(response => {
-		const article = fromJS(response.data);
-		dispatch(setArticle(article));
-	}); 
+export const fetchArticle = id => (dispatch, getState) => {
+
+	const article = getState().get('articles').find(a => {
+		return a.get('id') === +id;
+	});
+
+	const axiosFetchArticle = () => {
+		axios.get("/articles/"+id).then(response => {
+			const article = fromJS(response.data);
+			dispatch(setArticle(article));
+		}); 
+	}
+
+	if(article) {
+		if(article.get('article')) {
+			dispatch(setArticle(article));
+		} else {
+			axiosFetchArticle();
+		}
+	} else {
+		axiosFetchArticle();
+	}
 };
 
-export const deleteArticleAPI = id => dispatch => {
+export const deleteArticle = id => dispatch => {
 	axios.delete("/articles/"+id).then(response => {
-		dispatch(deleteArticle(id));
+		dispatch(removeArticle(id));
 	}); 
 };
 
@@ -53,17 +73,33 @@ export const putArticle = ({ id, title, article, tags }) => dispatch => {
 		article: article,
 		tags: tags.trim().split(' '),
 	};
+
 	axios.put("/articles/"+id, updatedArticle).then(response => {
-		// Unable to uses fromJS?
-		dispatch(updateArticle(fromJS(response.data)));
+		const updatedArticle = fromJS(response.data);
+		dispatch(updateArticle(fromJS(updatedArticle)));
 	});
 };
 
-export const fetchUpdatedArticle = id => dispatch => {
-	axios.get("/articles/"+id).then(response => {
-		const article = fromJS(response.data);
-		dispatch(setUpdatedArticle(article));
-	}); 
+//Reuseable function with fetch article?
+export const fetchUpdatedArticle = id => (dispatch, getState) => {
+
+	const article = getState().get('articles').find(a => {
+		return a.get('id') === +id;
+	});
+
+	const axiosFetchArticle = () => {
+		axios.get("/articles/"+id).then(response => {
+			const article = fromJS(response.data);
+			dispatch(setUpdatedArticle(article));
+		}); 
+	}
+
+	if(article) {
+		dispatch(setArticle(article));
+	} else {
+		axiosFetchArticle();
+	}
+	
 };
 
 export const fetchComments = (id) => dispatch => {
@@ -82,3 +118,4 @@ export const postComment = ({ email, comment }, id) => dispatch => {
 		dispatch(addComment(fromJS(response.data), id));
 	});
 };
+

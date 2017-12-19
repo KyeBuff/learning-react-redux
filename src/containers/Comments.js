@@ -6,10 +6,9 @@ const mapDispatchToProps = (dispatch, {id}) => {
 
 	return {
 		onSubmit: data => {
-			data.id = id;
 			dispatch(postComment(data, id))
 		},
-		onLoad: id => {
+		onLoad: () => {
 			dispatch(fetchComments(id));
 		},
 	};

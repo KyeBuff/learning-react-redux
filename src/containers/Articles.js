@@ -1,17 +1,23 @@
 import { connect } from 'react-redux';
 import { fetchArticles } from '../data/actions/api';
+import { setArticlesByTag } from '../data/actions/state';
 
 import Articles from "../components/Articles/Articles";
 
-const mapStateToProps = state => {
-	return {
-		articles: state.get('articles'),
-	}
+const mapStateToProps = (state, {tagID}) => {
+	return tagID ? {
+		articles: state.get('tags')
+	} : {
+		articles: state.get('articles')
+	};
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, {tagID}) => {
 	return {
-		onLoad: (tagID) => dispatch(fetchArticles(tagID))
+		onLoad: () => {
+			dispatch(fetchArticles(+tagID));
+			dispatch(setArticlesByTag(+tagID))
+		}
 	}
 }
 

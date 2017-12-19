@@ -8,27 +8,25 @@ export const addArticle = ({ id, title, article, tags }) => {
 	};
 };
 
-export const updateArticle = ({ id, title, article, tags}) => {
+export const updateArticle = (updatedArticle) => {
 	return {
 		type: "updateArticle",
-		id: id,
-		title: title,
-		tags,
-		article: article,
+		article: updatedArticle,
 	};
 };
 
-export const deleteArticle = (id) => {
+export const removeArticle = (id) => {
 	return {
 		type: "deleteArticle",
 		id: id,
 	};
 };
 
-export const setArticles = articles => {
+export const setArticles = (articles, tagID) => {
 	return {
 		type: "setArticles",
 		articles,
+		tagID,
 	};
 };
 
@@ -60,4 +58,11 @@ export const setUpdatedArticle = article => {
 		type: "setUpdatedArticle",
 		article,
 	};
+};
+
+export const setArticlesByTag = tagID => {
+	return {
+		type: 'setArticlesByTag',
+		tagID,
+	}
 };

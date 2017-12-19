@@ -12,8 +12,8 @@ const fields = [
 class Comments extends Component {
 
     componentDidMount() {
-        const { id, onLoad } = this.props;
-        onLoad(id);
+        const { onLoad } = this.props;
+        onLoad();
     }
 
     render() {

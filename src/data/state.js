@@ -7,6 +7,7 @@ import reducer from "./reducer";
 
 export const initial = Map({
     articles: List([]),
+    tags: List([]),
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
